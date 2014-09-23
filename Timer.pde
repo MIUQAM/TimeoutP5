@@ -57,4 +57,9 @@ class Timer {
     else
       return 0.0;
   }
+
+  // The function getNormalizedEllapsedTime() returns the time from when it started and the current time if the timer is running, normalized in values from 0 to 1
+  float getNormalizedEllapsedTime() {
+    return norm(this.getEllapsedTime(), 0, this.totalTime);
+  }
 }
