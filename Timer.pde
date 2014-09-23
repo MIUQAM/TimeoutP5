@@ -21,39 +21,39 @@ class Timer {
   boolean finished = false;
   
   Timer(int tempTotalTime) {
-    totalTime = tempTotalTime;
+    this.totalTime = tempTotalTime;
   }
   
   // Starting the timer
   void start() {
     // When the timer starts it stores the current time in milliseconds.
-    savedTime = millis();
-    started = true;
+    this.savedTime = millis();
+    this.started = true;
   }
   
   // The function isFinished() returns true if totalTime has passed. 
   // The work of the timer is farmed out to this method.
   boolean isFinished() { 
     // Check how much time has passed
-    int passedTime = millis() - savedTime;
-    if (passedTime > totalTime) {
-      finished = true;
+    int passedTime = millis() - this.savedTime;
+    if (passedTime > this.totalTime && this.started) {
+      this.finished = true;
     } else {
-      finished = false;
+      this.finished = false;
     }
 
-    return finished;
+    return this.finished;
   }
 
   // The function isStarted() returns true if the timer started.
   boolean isStarted() { 
-    return started;
+    return this.started;
   }
 
   // The function getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
   float getEllapsedTime() {
-    if(started && !finished)
-      return millis() - savedTime;
+    if(this.started && !this.finished)
+      return millis() - this.savedTime;
     else
       return 0.0;
   }
