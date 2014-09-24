@@ -11,14 +11,14 @@
 // myTimer.isStarted() can be useful to check if the timer is already running so you don't start it again before it ends.
 // myTimer.getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
 
-class ezTimeoutP5 {
+class TimeoutP5 {
  
   int savedTime; // When Timer started
   int totalTime; // How long Timer should last
   boolean started = false;
   boolean finished = false;
   
-  ezTimeoutP5(int tempTotalTime) {
+  TimeoutP5(int tempTotalTime) {
     this.totalTime = tempTotalTime;
   }
   
