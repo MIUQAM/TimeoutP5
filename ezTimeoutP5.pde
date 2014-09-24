@@ -1,10 +1,8 @@
-// Base code from: 
-// Learning Processing
-// Daniel Shiffman
+// Based on: 
 // http://www.learningprocessing.com
 // Example 10-5: Object-oriented timer
 
-// Modified by : Marc-Antoine Brodeur
+// Author : Marc-Antoine Brodeur
 // Method isStarted + variable started + method ellapsedTime
 // How to use:
 // Timer myTimer = new Timer(500);      500 is the timing in milliseconds
@@ -13,14 +11,14 @@
 // myTimer.isStarted() can be useful to check if the timer is already running so you don't start it again before it ends.
 // myTimer.getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
 
-class Timer {
+class ezTimeoutP5 {
  
   int savedTime; // When Timer started
   int totalTime; // How long Timer should last
   boolean started = false;
   boolean finished = false;
   
-  Timer(int tempTotalTime) {
+  ezTimeoutP5(int tempTotalTime) {
     this.totalTime = tempTotalTime;
   }
   
