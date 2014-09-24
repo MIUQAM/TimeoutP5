@@ -49,11 +49,11 @@ class TimeoutP5 {
   }
 
   // The function getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
-  float getEllapsedTime() {
+  int getEllapsedTime() {
     if(this.started && !this.finished)
       return millis() - this.savedTime;
     else
-      return 0.0;
+      return 0;
   }
 
   // The function getNormalizedEllapsedTime() returns the time from when it started and the current time if the timer is running, normalized in values from 0 to 1
