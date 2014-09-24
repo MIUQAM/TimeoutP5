@@ -20,6 +20,7 @@ class TimeoutP5 {
   boolean finished = false;
   boolean looped = false;
   boolean paused = false;
+  boolean stopped = true;
   
   TimeoutP5(int totalTime) {
     this.totalTime = totalTime;
@@ -32,31 +33,39 @@ class TimeoutP5 {
   
   // Starting the timer
   void start() {
-    // When the timer starts it stores the current time in milliseconds.
-    if(this.paused){
-      this.savedTime = millis() - this.savedTime;
-      println("here");
-    } else {
-      this.savedTime = millis();
-    }
+    if(!this.started){
+      // When the timer starts it stores the current time in milliseconds.
+      if(this.paused){
+        this.savedTime = millis() - this.savedTime;
+      } else {
+        this.savedTime = millis();
+      }
 
-    this.started = true;
-    this.finished = false;
-    this.paused = false;
+      this.started = true;
+      this.finished = false;
+      this.paused = false;
+      this.stopped = false;
+    }
   }
   
   void stop(){
-    this.started = false;
-    this.finished = true;
-    this.paused = false;
+    if(!this.stopped){
+      this.started = false;
+      this.finished = true;
+      this.paused = false;
+      this.stopped = true;
+    }
   }
   
   void pause(){
-    this.started = false;
-    this.finished = false;
-    this.paused = true;
+    if(!this.paused){
+      this.started = false;
+      this.finished = false;
+      this.paused = true;
+      this.stopped = false;
 
-    this.savedTime = millis() - this.savedTime;
+      this.savedTime = millis() - this.savedTime;
+    }
   }
 
   // The function isFinished() returns true if totalTime has passed. 
@@ -67,8 +76,7 @@ class TimeoutP5 {
     if(!this.finished){
     
       if (passedTime > this.totalTime && this.started) {
-
-        this.finished = true;
+        this.stop();
 
         if(looped){
           this.start();
