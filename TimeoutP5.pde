@@ -3,41 +3,81 @@
 // Example 10-5: Object-oriented timer
 
 // Author : Marc-Antoine Brodeur
-// Method isStarted + variable started + method ellapsedTime
+// Method isStarted + variable started + method Time
 // How to use:
-// Timer myTimer = new Timer(500);      500 is the timing in milliseconds
+// TimeoutP5 myTimer = new TimeoutP5(500);      500 is the timing in milliseconds
+// You can also initialize the timer with a second parameter TimeoutP5 myTimer = new TimeoutP5(500, true); which fill make the timer loop indefinitely until you stop it with the stop() method.
 // To start de timer : myTimer.start();
 // To check if timer is finished : if(myTimer.isFinished()) { /* Your actions here */ }
 // myTimer.isStarted() can be useful to check if the timer is already running so you don't start it again before it ends.
-// myTimer.getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
+// myTimer.getTime() returns the time in milliseconds from when it started and the current time if the timer is running.
 
 class TimeoutP5 {
  
-  int savedTime; // When Timer started
-  int totalTime; // How long Timer should last
+  int savedTime; // When TimeoutP5 started
+  int totalTime; // How long TimeoutP5 should last
   boolean started = false;
   boolean finished = false;
+  boolean looped = false;
+  boolean paused = false;
   
-  TimeoutP5(int tempTotalTime) {
-    this.totalTime = tempTotalTime;
+  TimeoutP5(int totalTime) {
+    this.totalTime = totalTime;
+  }
+
+  TimeoutP5(int totalTime, boolean looped) {
+    this.totalTime = totalTime;
+    this.looped = looped;
   }
   
   // Starting the timer
   void start() {
     // When the timer starts it stores the current time in milliseconds.
-    this.savedTime = millis();
+    if(this.paused){
+      this.savedTime = millis() - this.savedTime;
+      println("here");
+    } else {
+      this.savedTime = millis();
+    }
+
     this.started = true;
+    this.finished = false;
+    this.paused = false;
   }
   
+  void stop(){
+    this.started = false;
+    this.finished = true;
+    this.paused = false;
+  }
+  
+  void pause(){
+    this.started = false;
+    this.finished = false;
+    this.paused = true;
+
+    this.savedTime = millis() - this.savedTime;
+  }
+
   // The function isFinished() returns true if totalTime has passed. 
   // The work of the timer is farmed out to this method.
   boolean isFinished() { 
     // Check how much time has passed
     int passedTime = millis() - this.savedTime;
-    if (passedTime > this.totalTime && this.started) {
-      this.finished = true;
-    } else {
-      this.finished = false;
+    if(!this.finished){
+    
+      if (passedTime > this.totalTime && this.started) {
+
+        this.finished = true;
+
+        if(looped){
+          this.start();
+        }
+
+      } else {
+        this.finished = false;
+      }
+
     }
 
     return this.finished;
@@ -48,16 +88,16 @@ class TimeoutP5 {
     return this.started;
   }
 
-  // The function getEllapsedTime() returns the time in milliseconds from when it started and the current time if the timer is running.
-  int getEllapsedTime() {
+  // The function getTime() returns the time in milliseconds from when it started and the current time if the timer is running.
+  int getTime() {
     if(this.started && !this.finished)
       return millis() - this.savedTime;
     else
       return 0;
   }
 
-  // The function getNormalizedEllapsedTime() returns the time from when it started and the current time if the timer is running, normalized in values from 0 to 1
-  float getNormalizedEllapsedTime() {
-    return norm(this.getEllapsedTime(), 0, this.totalTime);
+  // The function getNormalizedTime() returns the time from when it started and the current time if the timer is running, normalized in values from 0 to 1
+  float getNormalizedTime() {
+    return norm(this.getTime(), 0, this.totalTime);
   }
 }
